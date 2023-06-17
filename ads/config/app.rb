@@ -11,8 +11,6 @@ class App < Roda
 
   plugin :default_headers, 'Content-Type' => 'application/json'
   plugin :all_verbs
-  plugin :halt
-  plugin :path
   plugin :json_parser
   # replaced with custom serializer
   # plugin :json, classes: [Array, Hash, Sequel::Model], content_type: 'application/json'
