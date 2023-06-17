@@ -26,13 +26,13 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.ads (
     id bigint NOT NULL,
-    title character varying(255) NOT NULL,
+    title character varying NOT NULL,
     description text NOT NULL,
-    city character varying(255) NOT NULL,
+    city character varying NOT NULL,
     lat double precision,
     lon double precision,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
     user_id bigint NOT NULL
 );
 

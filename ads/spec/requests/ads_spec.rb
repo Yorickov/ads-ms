@@ -2,12 +2,12 @@
 
 require 'spec_helper'
 
-RSpec.describe 'GET /', type: :request do
+describe 'GET /ads/v1', type: :request do
   let(:user_id) { 1 }
 
   before do
     create_list(:ad, 2, user_id: user_id)
-    get '/'
+    get '/ads/v1'
   end
 
   it 'returns 200 HTTP status' do
@@ -22,13 +22,13 @@ RSpec.describe 'GET /', type: :request do
   end
 end
 
-describe 'POST /ads', type: :request do
+describe 'POST /ads/v1', type: :request do
   let(:user_id) { 1 }
   let(:ad_params) { attributes_for(:ad) }
 
   context 'when success' do
     before do
-      post '/ads', ad: ad_params, user_id: user_id
+      post '/ads/v1', ad: ad_params, user_id: user_id
     end
 
     it 'returns 201 status' do
@@ -41,30 +41,28 @@ describe 'POST /ads', type: :request do
   end
 
   context 'when failure' do
-    context 'when param is missing' do
-      it 'returns KeyError' do
-        post '/ads', ad: ad_params.except(:city), user_id: user_id
+    context 'when param is invalid' do
+      it 'returns InvalidParamsError' do
+        post '/ads/v1', ad: ad_params.merge(city: ''), user_id: user_id
 
         expect(response.status).to eq(422)
         expect(json_response['errors']).to include(
           {
-            'detail' => "Request lacks necessary parameters: Ads::CreateService::Ad: option 'city' is required"
+            'detail' => 'City is missing',
+            'source' => { 'pointer' => '/data/attributes/city' }
           }
         )
       end
     end
 
-    context 'when param is empty' do
-      it 'returns :param error' do
-        post '/ads', ad: ad_params.merge(city: ''), user_id: user_id
+    context 'when param is missing' do
+      it 'returns InvalidParamsError' do
+        post '/ads/v1', ad: ad_params.except(:city), user_id: user_id
 
         expect(response.status).to eq(422)
         expect(json_response['errors']).to include(
           {
-            'detail' => 'is not present',
-            'source' => {
-              'pointer' => '/data/attributes/city'
-            }
+            'detail' => 'Request lacks necessary parameters'
           }
         )
       end

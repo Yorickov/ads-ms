@@ -4,16 +4,19 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
+gem 'activesupport', require: false
+gem 'anyway_config'
+gem 'config'
 gem 'dry-initializer'
+gem 'dry-validation'
+gem 'i18n'
 gem 'jsonapi-serializer'
 gem 'puma'
 gem 'rake'
 gem 'roda'
-gem 'roda-i18n'
 gem 'roda-symbolized_params'
 gem 'sequel'
 gem 'sequel_pg', require: 'sequel'
-gem 'zeitwerk'
 
 group :development, :test do
   gem 'factory_bot'
@@ -26,6 +29,7 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner-sequel'
   gem 'rack-test'
   gem 'rspec'
 end

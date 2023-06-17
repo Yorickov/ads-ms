@@ -3,7 +3,7 @@
 RSpec.describe Ads::CreateService do
   let(:service_called) { described_class.call(**params) }
 
-  let(:user_id) { 1 }
+  let(:user_id) { 101 }
 
   context 'when success' do
     let(:params) {
@@ -31,18 +31,11 @@ RSpec.describe Ads::CreateService do
     }
 
     it 'does not create ad' do
-      expect do
-        service_called
-      rescue Sequel::ValidationFailed
-        nil
-      end.not_to change(Ad, :count)
+      expect { service_called }.not_to change(Ad, :count)
     end
 
-    it 'returns errors' do
-      expect { service_called }.to raise_error do |error|
-        expect(error).to be_a(Sequel::ValidationFailed)
-        expect(error.errors).to eq({ title: ['is not present'] })
-      end
+    it 'returns ad' do
+      expect(service_called.ad).to be_a(Ad)
     end
   end
 end

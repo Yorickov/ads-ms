@@ -5,5 +5,6 @@ FactoryBot.define do
     title { 'Title' }
     description { 'Description' }
     city { 'City' }
+    user_id { 101 }
   end
 end

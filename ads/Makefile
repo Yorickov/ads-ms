@@ -2,9 +2,9 @@ install:
 	bundle install
 
 test:
+	bin/rspec
 
-	bundle exec rspec
 start:
-	bundle exec puma -C config/puma.rb
+	bin/puma -C config/puma.rb
 
 .PHONY:	test
