@@ -3,7 +3,7 @@
 class App
   hash_branch 'ads' do |r|
     r.on 'v1' do
-      r.get do
+      r.get true do
         page = params[:page].presence || 1
         ads = Ad.reverse_order(:updated_at)
                 .paginate(page.to_i, Config.app.page_size)
@@ -11,11 +11,11 @@ class App
         AdSerializer.new(ads.all, links: pagination_links(ads)).serializable_hash.to_json
       end
 
-      r.post do
+      r.post true do
         ad_params = validate_with!(AdParamsContract)
         result = Ads::CreateService.call(
           ad: ad_params[:ad],
-          user_id: params[:user_id]
+          user_id: user_id
         )
 
         if result.success?

@@ -4,6 +4,7 @@ class App < Roda
   include ApiErrors
   include PaginationLinks
   include Validations
+  include Auth
 
   opts[:root] = File.expand_path('..', __dir__)
 
@@ -12,6 +13,7 @@ class App < Roda
   plugin :default_headers, 'Content-Type' => 'application/json'
   plugin :all_verbs
   plugin :json_parser
+  plugin :request_headers
   # replaced with custom serializer
   # plugin :json, classes: [Array, Hash, Sequel::Model], content_type: 'application/json'
 
@@ -32,6 +34,9 @@ class App < Roda
     elsif e.instance_of?(Sequel::UniqueConstraintViolation)
       errors = error_response(::I18n.t('api.errors.not_unique'))
       response.status = 404
+    elsif e.instance_of?(Auth::Unauthorized)
+      errors = error_response(::I18n.t('api.errors.unauthorized'))
+      response.status = 403
     else
       errors = error_response(::I18n.t('api.errors.unexpected_error', msg: e.message))
       response.status = 500

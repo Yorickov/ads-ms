@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'GET /ads/v1', type: :request do
+RSpec.describe 'GET /ads/v1', type: :request do
   let(:user_id) { 1 }
 
   before do
@@ -22,13 +22,26 @@ describe 'GET /ads/v1', type: :request do
   end
 end
 
-describe 'POST /ads/v1', type: :request do
+RSpec.describe 'POST /ads/v1', type: :request do
   let(:user_id) { 1 }
   let(:ad_params) { attributes_for(:ad) }
+  let(:auth_token) { 'auth.token' }
+  let(:auth_service) { instance_double('Auth service') }
+
+  before do
+    allow(auth_service)
+      .to receive(:auth)
+      .and_return(user_id)
+    allow(AuthService::Client)
+      .to receive(:new)
+      .and_return(auth_service)
+
+    header 'Authorization', "Bearer #{auth_token}"
+  end
 
   context 'when success' do
     before do
-      post '/ads/v1', ad: ad_params, user_id: user_id
+      post '/ads/v1', ad: ad_params
     end
 
     it 'returns 201 status' do
@@ -41,9 +54,9 @@ describe 'POST /ads/v1', type: :request do
   end
 
   context 'when failure' do
-    context 'when param is invalid' do
-      it 'returns InvalidParamsError' do
-        post '/ads/v1', ad: ad_params.merge(city: ''), user_id: user_id
+    context 'when city is invalid' do
+      it 'returns :city error' do
+        post '/ads/v1', ad: ad_params.merge(city: '')
 
         expect(response.status).to eq(422)
         expect(json_response['errors']).to include(
@@ -55,9 +68,9 @@ describe 'POST /ads/v1', type: :request do
       end
     end
 
-    context 'when param is missing' do
-      it 'returns InvalidParamsError' do
-        post '/ads/v1', ad: ad_params.except(:city), user_id: user_id
+    context 'when city is missing' do
+      it 'returns :city error' do
+        post '/ads/v1', ad: ad_params.except(:city)
 
         expect(response.status).to eq(422)
         expect(json_response['errors']).to include(
@@ -65,6 +78,17 @@ describe 'POST /ads/v1', type: :request do
             'detail' => 'Request lacks necessary parameters'
           }
         )
+      end
+    end
+
+    context 'when user_id is missing ' do
+      let(:user_id) { nil }
+
+      it 'returns an error' do
+        post '/ads/v1', ad: ad_params
+
+        expect(response.status).to eq(403)
+        expect(json_response['errors']).to include('detail' => 'No permission to access the resource')
       end
     end
   end

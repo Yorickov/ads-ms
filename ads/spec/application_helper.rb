@@ -19,6 +19,8 @@ RSpec.configure do |config|
       end
     end
   )
+  config.include ClientHelpers, type: :client
+
   config.around do |example|
     Sequel::Model.db.transaction(rollback: :always, auto_savepoint: true) { example.run }
   end
