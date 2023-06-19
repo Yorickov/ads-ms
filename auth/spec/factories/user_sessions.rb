@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :user_session do
-    association :user
+    user
   end
 end

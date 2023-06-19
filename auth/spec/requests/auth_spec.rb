@@ -12,7 +12,7 @@ RSpec.describe 'Sessions API', type: :request do
     context 'when success' do
       it 'returns 200 status' do
         header 'Authorization', token
-        get '/v1/auth'
+        post '/v1/auth'
 
         expect(response.status).to eq(200)
         expect(json_response['meta']).to eq('user_id' => user.id)
@@ -25,7 +25,7 @@ RSpec.describe 'Sessions API', type: :request do
 
         it 'returns 403 error' do
           header 'Authorization', token
-          get '/v1/auth'
+          post '/v1/auth'
 
           expect(response.status).to eq(403)
           expect(json_response['errors']).to include(
@@ -38,7 +38,7 @@ RSpec.describe 'Sessions API', type: :request do
 
       context 'when auth header is missing' do
         it 'returns 403 error' do
-          get '/v1/auth'
+          post '/v1/auth'
 
           expect(response.status).to eq(403)
           expect(json_response['errors']).to include(

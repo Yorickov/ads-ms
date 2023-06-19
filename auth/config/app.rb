@@ -71,7 +71,7 @@ class App < Roda
       end
 
       r.on 'auth' do
-        r.get true do
+        r.post true do
           result = Auth::FetchUserService.call(extracted_token['uuid'])
           if result.success?
             response.status = 200
