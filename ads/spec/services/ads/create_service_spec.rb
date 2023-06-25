@@ -2,8 +2,23 @@
 
 RSpec.describe Ads::CreateService do
   let(:service_called) { described_class.call(**params) }
-
   let(:user_id) { 101 }
+  let(:geo_data) {
+    {
+      'lat' => 45.05,
+      'lon' => 90.05
+    }
+  }
+  let(:geo_service) { instance_double('Geo service') }
+
+  before do
+    allow(geo_service)
+      .to receive(:coordinates)
+      .and_return(geo_data)
+    allow(GeoService::Client)
+      .to receive(:new)
+      .and_return(geo_service)
+  end
 
   context 'when success' do
     let(:params) {
@@ -18,7 +33,7 @@ RSpec.describe Ads::CreateService do
     end
 
     it 'returns ad' do
-      expect(service_called.ad).to be_a(Ad)
+      expect(service_called.ad.values).to include(params[:ad].merge(geo_data.symbolize_keys))
     end
   end
 

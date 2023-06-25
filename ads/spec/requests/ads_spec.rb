@@ -24,9 +24,16 @@ end
 
 RSpec.describe 'POST /ads/v1', type: :request do
   let(:user_id) { 1 }
+  let(:geo_data) {
+    {
+      'lat' => 45.05,
+      'lon' => 90.05
+    }
+  }
   let(:ad_params) { attributes_for(:ad) }
   let(:auth_token) { 'auth.token' }
   let(:auth_service) { instance_double('Auth service') }
+  let(:geo_service) { instance_double('Geo service') }
 
   before do
     allow(auth_service)
@@ -35,6 +42,13 @@ RSpec.describe 'POST /ads/v1', type: :request do
     allow(AuthService::Client)
       .to receive(:new)
       .and_return(auth_service)
+
+    allow(geo_service)
+      .to receive(:coordinates)
+      .and_return(geo_data)
+    allow(GeoService::Client)
+      .to receive(:new)
+      .and_return(geo_service)
 
     header 'Authorization', "Bearer #{auth_token}"
   end
