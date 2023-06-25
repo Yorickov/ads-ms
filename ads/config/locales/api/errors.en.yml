@@ -1,0 +1,8 @@
+en:
+  api:
+    errors:
+      not_found: "Resource not found: %{msg}"
+      not_unique: Resource already exists
+      missing_parameters: Request lacks necessary parameters
+      unexpected_error: "Unexpected error: %{msg}"
+      unauthorized: No permission to access the resource

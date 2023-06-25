@@ -1,0 +1,10 @@
+en:
+  model:
+    errors:
+      ad:
+        title:
+          blank: Title is missing
+        description:
+          blank: Description is missing
+        city:
+          blank: City is missing

@@ -1,0 +1,6 @@
+development:
+  database: auth_development
+
+test:
+  database: auth_test
+  max_connections: 1
