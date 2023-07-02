@@ -29,7 +29,7 @@ class App < Roda
       errors = error_response(::I18n.t('api.errors.missing_parameters', msg: e.message))
       response.status = 422
     elsif e.instance_of?(Sequel::NoMatchingRow)
-      errors = error_response(::I18n.t('api.errors.not_found', msg: e.message))
+      errors = error_response(::I18n.t('api.errors.not_found'))
       response.status = 404
     elsif e.instance_of?(Sequel::UniqueConstraintViolation)
       errors = error_response(::I18n.t('api.errors.not_unique'))

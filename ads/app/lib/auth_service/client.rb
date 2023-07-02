@@ -6,6 +6,6 @@ module AuthService
   class Client < BaseClient
     include Api
 
-    option :url, default: proc { 'http://localhost:3010/v1' }
+    option :url, default: proc { Config.app.url['auth'] }
   end
 end

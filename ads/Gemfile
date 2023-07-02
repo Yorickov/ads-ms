@@ -6,6 +6,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'activesupport', require: false
 gem 'anyway_config'
+gem 'bunny'
 gem 'config'
 gem 'dry-initializer'
 gem 'dry-validation'

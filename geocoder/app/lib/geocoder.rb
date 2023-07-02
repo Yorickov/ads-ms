@@ -7,7 +7,7 @@ module Geocoder
 
   extend self
 
-  DATA_PATH = File.expand_path('../../db/data/city.csv', __dir__)
+  DATA_PATH = App.root.concat('/db/data/city.csv')
 
   def geocode(city)
     data[city]

@@ -6,6 +6,7 @@ Anyway::Settings.current_environment = ENV['RACK_ENV'] || 'development'
 module Config
   class AppConfig < Anyway::Config
     config_name :app
+    attr_config :rabbitmq
   end
 
   class << self

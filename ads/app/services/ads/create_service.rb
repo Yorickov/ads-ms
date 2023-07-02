@@ -4,8 +4,6 @@ module Ads
   class CreateService
     prepend BasicService
 
-    include Geo
-
     option :ad do
       option :title
       option :description
@@ -13,16 +11,17 @@ module Ads
     end
 
     option :user_id
+    option :geocoder, default: proc { GeoService::RcpClient.new }
 
     attr_reader :ad
 
     def call
       @ad = ::Ad.new(@ad.to_h)
       @ad.user_id = @user_id
-      @ad.lat, @ad.lon = coordinates(@ad.city).values_at('lat', 'lon')
 
       if @ad.valid?
         @ad.save
+        @geocoder.geocode_later(@ad)
       else
         fail!(@ad.errors)
       end

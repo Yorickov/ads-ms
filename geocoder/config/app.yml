@@ -1,0 +1,7 @@
+development:
+  rabbitmq:
+    consumer_pool: 10
+
+production:
+  rabbitmq:
+    consumer_pool: 10

@@ -15,6 +15,8 @@ module Config
   class AppConfig < Anyway::Config
     config_name :app
     attr_config page_size: 10
+    attr_config :url
+    attr_config :rabbitmq
   end
 
   class << self

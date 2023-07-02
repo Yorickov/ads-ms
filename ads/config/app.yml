@@ -1,0 +1,13 @@
+development:
+  url:
+    geocoder: http://localhost:3020/v1
+    auth: http://localhost:3010/v1
+  rabbitmq:
+    consumer_pool: 10
+
+production:
+  url:
+    geocoder: http://localhost:3020/v1
+    auth: http://localhost:3010/v1
+  rabbitmq:
+    consumer_pool: 10
