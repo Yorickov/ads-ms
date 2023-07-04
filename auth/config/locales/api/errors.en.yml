@@ -1,0 +1,14 @@
+en:
+  api:
+    errors:
+      not_found: "Resource not found: %{msg}"
+      not_unique: Resource already exists
+      missing_parameters: Request lacks necessary parameters
+      unexpected_error: "Unexpected error: %{msg}"
+  services:
+    user_sessions:
+      create_service:
+        unauthorized: Session can be created
+    auth:
+      fetch_user_service:
+        forbidden: No permission to access the resource

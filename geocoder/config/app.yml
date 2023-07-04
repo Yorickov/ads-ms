@@ -1,0 +1,11 @@
+development:
+  rabbitmq:
+    consumer_pool: 10
+  url:
+    ads: http://localhost:3000/ads/v1
+
+production:
+  rabbitmq:
+    consumer_pool: 10
+  url:
+    ads: http://localhost:3000/ads/v1

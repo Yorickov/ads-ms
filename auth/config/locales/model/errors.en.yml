@@ -1,0 +1,12 @@
+en:
+  model:
+    errors:
+      user:
+        name:
+          blank: Name is missing
+          format: Wrong name format
+        email:
+          blank: Email is missing
+      user_sessiion:
+        uuid:
+          blank: Blank is missing

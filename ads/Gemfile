@@ -1,0 +1,38 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+gem 'activesupport', require: false
+gem 'anyway_config'
+gem 'bunny'
+gem 'config'
+gem 'dry-initializer'
+gem 'dry-validation'
+gem 'faraday'
+gem 'faraday_middleware'
+gem 'i18n'
+gem 'jsonapi-serializer'
+gem 'puma'
+gem 'rake'
+gem 'roda'
+gem 'roda-symbolized_params'
+gem 'sequel'
+gem 'sequel_pg', require: 'sequel'
+
+group :development, :test do
+  gem 'factory_bot'
+  gem 'pry'
+end
+
+group :development do
+  gem 'roda-enhanced_logger'
+  gem 'sequel-annotate'
+end
+
+group :test do
+  gem 'database_cleaner-sequel'
+  gem 'rack-test'
+  gem 'rspec'
+end
