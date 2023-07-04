@@ -7,6 +7,7 @@ module Config
   class AppConfig < Anyway::Config
     config_name :app
     attr_config :rabbitmq
+    attr_config :url
   end
 
   class << self

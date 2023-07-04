@@ -26,6 +26,13 @@ class App
           error_response(result.ad).to_json
         end
       end
+
+      r.patch true do
+        lat, lon = params[:coordinates]
+        result = Ads::UpdateService.call(params[:id], lat, lon)
+        response.status = result.success? ? 200 : 422
+        nil
+      end
     end
   end
 end

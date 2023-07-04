@@ -16,6 +16,7 @@ module Config
   class AppConfig < Anyway::Config
     config_name :app
     attr_config secret: 'some'
+    attr_config :rabbitmq
   end
 
   class << self
